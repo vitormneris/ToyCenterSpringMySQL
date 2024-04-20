@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import br.edu.toycenter.entities.Category;
 import br.edu.toycenter.entities.Order;
+import br.edu.toycenter.entities.OrderItem;
 import br.edu.toycenter.entities.Product;
 import br.edu.toycenter.entities.User;
 import br.edu.toycenter.entities.enums.OrderStatus;
 import br.edu.toycenter.repositories.CategoryRepository;
+import br.edu.toycenter.repositories.OrderItemRepository;
 import br.edu.toycenter.repositories.OrderRepository;
 import br.edu.toycenter.repositories.ProductRepository;
 import br.edu.toycenter.repositories.UserRepository;
@@ -34,6 +36,9 @@ public class TestConfig implements CommandLineRunner {
 	@Autowired
 	private ProductRepository productRepository;
 	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
@@ -53,6 +58,11 @@ public class TestConfig implements CommandLineRunner {
 		Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
 		Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 		
+		OrderItem oi1 = new OrderItem(p1, o1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(p3, o1, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(p3, o2, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(p5, o3, 2, p5.getPrice());
+		
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
@@ -66,5 +76,7 @@ public class TestConfig implements CommandLineRunner {
 		p5.getCategories().add(cat2);
 		
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4 , p5));
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
 	}
 }
